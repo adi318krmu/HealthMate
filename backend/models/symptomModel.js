@@ -1,16 +1,30 @@
-const{ Schema , model}= require('mongoose')
+// models/Symptom.js
+const mongoose = require('mongoose');
 
-const SymSchema= new Schema({
-    name:{
-   type: String,
-   required : true,
+const symptomSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  description: {
+    type: String,
+  },
+  relatedConditions: [
+    {
+      type: String, // e.g., "Fever", "COVID-19", "Flu"
+    }
+  ],
+  severity: {
+    type: String,
+    enum: ["Low", "Moderate", "High", "Critical"],
+    default: "Low"
+  },
+  remedies: [
+    {
+      type: String, // e.g., "Drink water", "Rest", "Paracetamol"
+    }
+  ]
+}, { timestamps: true });
 
-    },
-      createdAt: {
-    type: Date,
-    default: Date.now,
-  }
-});
-
-const SymModel = model("Symptoms", SymSchema);
-module.exports= SymModel;
+module.exports = mongoose.model('Symptom', symptomSchema);

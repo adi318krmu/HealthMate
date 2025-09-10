@@ -1,23 +1,18 @@
-const { Schema , model}= require('mongoose')
+// models/Doctor.js
+const mongoose = require('mongoose');
 
-const DocSchema = new Schema({
-    name :{
-        type : String,
-        required : true,
-        maxlength : 50,
+const doctorSchema = new mongoose.Schema({
+  specialization: {
+    type: String,
+    required: true, // Example: "Cardiologist"
+    unique: true
+  },
+  description: {
+    type: String, // Small note e.g. "Heart & chest related issues"
+  },
+  commonSymptoms: [
+    { type: String } // Example: ["Chest pain", "Shortness of breath"]
+  ]
+}, { timestamps: true });
 
-    },
-    role:{
-       type : String,
-        required : true,
-        maxlength : 50,
-    }
-    , 
-      createdAt: {
-    type: Date,
-    default: Date.now,
-  }
-});
-
-const DocModel= model("Doctors", DocSchema)
-module.exports= DocModel;
+module.exports = mongoose.model('Doctor', doctorSchema);
