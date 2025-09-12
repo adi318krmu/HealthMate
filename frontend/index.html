@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthMate - Sign In / Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="https://img.icons8.com/fluency/96/medical-doctor.png" alt="logo">
+      <h2>HealthMate</h2>
+    </div>
+
+    <!-- Sign In Form -->
+    <div id="signin" class="form active">
+      <h3>Sign In</h3>
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      <button onclick="loginUser()">Login</button>
+      <span class="toggle-link" onclick="showSignup()">New user? Sign Up</span>
+      <div id="loginMsg" class="message"></div>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="signup" class="form">
+      <h3>Create Account</h3>
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+      <button onclick="registerUser()">Register</button>
+      <span class="toggle-link" onclick="showSignin()">Already have an account? Sign In</span>
+      <div id="signupMsg" class="message"></div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle Functions
+    function showSignup() {
+      document.getElementById("signin").classList.remove("active");
+      document.getElementById("signup").classList.add("active");
+    }
+
+    function showSignin() {
+      document.getElementById("signup").classList.remove("active");
+      document.getElementById("signin").classList.add("active");
+    }
+
+    // Backend URL (change this to your backend API)
+    const API_URL = "http://localhost:5000/api/auth";
+
+    // Register User
+    async function registerUser() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const msg = document.getElementById("signupMsg");
+
+      if (password !== confirmPassword) {
+        msg.textContent = "Passwords do not match!";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_URL}/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await res.json();
+        msg.textContent = data.message || "Registration successful!";
+        msg.style.color = res.ok ? "green" : "red";
+      } catch (error) {
+        msg.textContent = "Error connecting to server!";
+      }
+    }
+
+    // Login User
+    async function loginUser() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const msg = document.getElementById("loginMsg");
+
+      try {
+        const res = await fetch(`${API_URL}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        msg.textContent = data.message || "Login successful!";
+        msg.style.color = res.ok ? "green" : "red";
+
+        if (res.ok) {
+        // Save token
+        localStorage.setItem("token", data.token);
+        // Redirect to dashboard (same folder)
+        window.location.href = "dashboard.html";
+      }
+      } catch (error) {
+        msg.textContent = "Error connecting to server!";
+      }
+    }
+  </script>
+
+</body>
+</html>
