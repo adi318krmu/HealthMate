@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="light-mode">
+    <header class="navbar admin-nav">
+        <h1 class="logo">HealthMate Admin</h1>
+        <a href="index.html" class="nav-link back-link">Back to App</a>
+    </header>
+
+    <main class="admin-dashboard-container">
+        <h2>Admin Dashboard</h2>
+        <p>This is a static admin page to manage users and doctors.</p>
+
+        <section class="admin-section">
+            <h3>Registered Users</h3>
+            <div class="user-list">
+                <div class="card user-card">
+                    <p><strong>Username:</strong> John Doe</p>
+                    <p><strong>Email:</strong> john.doe@example.com</p>
+                    <button class="btn remove-btn">Remove</button>
+                </div>
+                <div class="card user-card">
+                    <p><strong>Username:</strong> Jane Smith</p>
+                    <p><strong>Email:</strong> jane.smith@example.com</p>
+                    <button class="btn remove-btn">Remove</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-section">
+            <h3>Doctors</h3>
+            <div class="doctor-actions">
+                <button class="btn add-doctor-btn">Add Doctor</button>
+                <button class="btn remove-doctor-btn">Remove Doctor</button>
+            </div>
+            <div class="doctor-list">
+                <div class="card user-card">
+                    <p><strong>Dr. Alan Grant</strong> - Cardiology</p>
+                    <p>+1 234 567 8900</p>
+                </div>
+                <div class="card user-card">
+                    <p><strong>Dr. Ellie Sattler</strong> - Dermatology</p>
+                    <p>+1 987 654 3210</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 HealthMate. All rights reserved.</p>
+    </footer>
+</body>
+</html>
